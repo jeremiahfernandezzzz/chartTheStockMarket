@@ -13,7 +13,7 @@ var Quandl = require("quandl");
 var quandl = new Quandl();
  
 var options = {
-    api_key: "c781SfZ9pzK9vLTrrGqP"
+    api_key: '9DL8AEJpLQna4YsPswnY'
 }
  
 quandl.configure(options);
