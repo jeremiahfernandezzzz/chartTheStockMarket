@@ -9,7 +9,7 @@ var app = express();
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public/views'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
@@ -18,6 +18,11 @@ app.get("/", function (request, response) {
 
 app.get("/dreams", function (request, response) {
   response.send(dreams);
+});
+
+
+app.get("/stock", function (request, response) {
+  response.sendFile(__dirname + '/public/views/stock.html');
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
