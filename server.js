@@ -9,6 +9,15 @@ var app = express();
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
 // http://expressjs.com/en/starter/static-files.html
+var Quandl = require("quandl");
+var quandl = new Quandl();
+ 
+var options = {
+    api_key: "c781SfZ9pzK9vLTrrGqP"
+}
+ 
+quandl.configure(options);
+
 app.use(express.static(__dirname + '/public/views'));
 
 // http://expressjs.com/en/starter/basic-routing.html
@@ -22,7 +31,12 @@ app.get("/dreams", function (request, response) {
 
 
 app.get("/stock", function (request, response) {
-  response.sendFile(__dirname + '/public/views/stock.html');
+  quandl.dataset({ source: "BITCOIN", table: "MTGOXUSD" }, function(err, response){
+    if(err)
+        throw err;
+ 
+    console.log(response);
+  });
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
