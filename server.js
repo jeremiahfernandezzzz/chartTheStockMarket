@@ -33,7 +33,7 @@ app.get("/dreams", function (request, response) {
 app.get("/stock", function (request, response) {
   Eod.fetch()
   .then((data) => {
-    response.send(data["dataset"]["data"]) //raw JSON response
+    console.log(data[0]) //raw JSON response
   })
 });
 
