@@ -29,6 +29,12 @@ document.querySelector("#go").addEventListener("click", function(){
   document.querySelector("#tickers").value.split(",").forEach(function(element){
     tickers.push(element.replace(/\s/g,""))
   })
+  $.ajax({
+    type: "POST",
+    url: "/stock",
+    data: tickers,
+    success: function() {}
+  });
   go(tickers)
 }, false);
   

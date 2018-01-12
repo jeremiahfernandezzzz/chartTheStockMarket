@@ -4,6 +4,9 @@
 // init project
 var express = require('express');
 var app = express();
+var mongodb = require("mongodb")
+var MongoClient = mongodb.MongoClient;
+var url = process.env.DB_URL;
 
 const quandlEodHelper = require('quandl-eod-helper');
 const Eod = new quandlEodHelper();
@@ -25,6 +28,19 @@ app.get("/", function (request, response) {
 
 app.get("/dreams", function (request, response) {
   response.send(dreams);
+});
+
+
+app.post("/stock", function (request, response) {
+  MongoClient.connect(url, function(err, db){
+        if (db){
+              console.log("connected to " + url);
+              db.collection("chart-state").insertOne({tickers : request.body.tickers})
+        }
+        if (err) {
+         console.log("did not connect to " + url)
+        }
+      })
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body

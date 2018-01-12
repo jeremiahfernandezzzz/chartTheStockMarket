@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "^4.16.2",
+    "mongodb": "^3.0.1",
     "quandl": "0.0.6",
     "quandl-eod-helper": "^1.2.5"
   },
