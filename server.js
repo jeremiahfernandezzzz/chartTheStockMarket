@@ -7,9 +7,7 @@ var app = express();
 
 const quandlEodHelper = require('quandl-eod-helper');
 const Eod = new quandlEodHelper();
-const year = '2016'
-const tickers = ['AAPL', 'MSFT']
-Eod.config({ year, tickers });
+//const year = '2016'
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -30,10 +28,18 @@ app.get("/dreams", function (request, response) {
 });
 
 
-app.get("/stock", function (request, response) {
+app.get("/stock/:qwe", function (request, response) {
+  var tickr = [];
+  request.params.qwe.split(",").forEach(function(element){
+    tickr.push(element)
+  });
+  console.log(tickr)
+  const tickers = tickr
+  const year = 2018
+  Eod.config({ year, tickers });
   Eod.fetch()
   .then((data) => {
-    console.log(data[0]) //raw JSON response
+    console.log(data[0]["dataset"]["data"]) //raw JSON response
   })
 });
 
