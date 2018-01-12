@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/public/views'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+  response.sendFile(__dirname + '/public/views/stock.html');
 });
 
 app.get("/dreams", function (request, response) {
