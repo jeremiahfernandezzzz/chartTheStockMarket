@@ -29,21 +29,21 @@ app.get("/dreams", function (request, response) {
 
 
 app.get("/stock/:qwe", function (request, response) {
-  var tickr = [];
-  request.params.qwe.split(",").forEach(function(element){
-    tickr.push(element)
-  });
-  console.log(tickr)
+  var tickr = ["haha","hehe"];
+  //request.params.qwe.split(",").forEach(function(element){
+   // tickr.push(element)
+ // });
+  //console.log(tickr)
   const year = 2018
   tickr.forEach(function(tick){
     Eod.config({ year, tick });
     Eod.fetch()
     .then((data) => {
       Object.values(data[0]["dataset"]["data"]).forEach(function(element){
-        var date = [];
+        var dateArray = [];
         
         element[0].split("-").forEach(function(element){
-          date.push(element)
+          dateArray.push(element)
         }) ;
         
         function toMonth(month){
@@ -61,10 +61,13 @@ app.get("/stock/:qwe", function (request, response) {
             if (month == 12) {return "December"}
         }
         
-        date[1] = toMonth(date[1])
-        console.log("year" + date[0] + " month" + date[1] + " date" + date[2])
-        
+        dateArray[1] = toMonth(dateArray[1])
+        //console.log("year" + date[0] + " month" + date[1] + " date" + date[2])
+        var date = new Date(dateArray[1] + " " + dateArray[2] + " " + dateArray[0])
+        var unixTime = date.getTime();
+        element[0] = unixTime
       }) //raw JSON response
+      console.log(data[0]["dataset"]["data"])
     })
   })
 });
