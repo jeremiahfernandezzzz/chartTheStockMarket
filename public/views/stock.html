@@ -18,63 +18,29 @@
 
 <div id="container" style="height: 400px; min-width: 310px"></div>
 
-<input type="texarea"><input type="button" value="go" id="go">
+<input type="texarea" id="tickers"><input type="button" value="go" id="go">
 		
 	</body>
 </html>
 
 <script type="text/javascript">
 document.querySelector("#go").addEventListener("click", function(){
-  go()
+  var tickers = []
+  document.querySelector("#tickers").value.split(",").forEach(function(element){
+    tickers.push(element)
+  })
+  go(tickers)
 }, false);
   
-var seriesOptions = [],
-    seriesCounter = 0,
-    names = ['MSFT', 'AAPL', 'GOOG', 'EBAY'];
-
 /**
  * Create the chart when all data is loaded
  * @returns {undefined}
  */
-function createChart() {
 
-    Highcharts.stockChart('container', {
-
-        rangeSelector: {
-            selected: 4
-        },
-
-        yAxis: {
-            labels: {
-                formatter: function () {
-                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
-                }
-            },
-            plotLines: [{
-                value: 0,
-                width: 2,
-                color: 'silver'
-            }]
-        },
-
-        plotOptions: {
-            series: {
-                compare: 'percent',
-                showInNavigator: true
-            }
-        },
-
-        tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-            valueDecimals: 2,
-            split: true
-        },
-
-        series: seriesOptions
-    });
-}
-
-function go(){
+function go(tickers){
+  var seriesOptions = [],
+    seriesCounter = 0,
+  names = tickers;
   $.each(names, function (i, name) {
         $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
         var usefulData = [];
@@ -121,7 +87,41 @@ function go(){
           seriesCounter += 1;
 
           if (seriesCounter === names.length) {
-              createChart();
+
+            Highcharts.stockChart('container', {
+
+                rangeSelector: {
+                    selected: 4
+                },
+
+                yAxis: {
+                    labels: {
+                        formatter: function () {
+                            return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                        }
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 2,
+                        color: 'silver'
+                    }]
+                },
+
+                plotOptions: {
+                    series: {
+                        compare: 'percent',
+                        showInNavigator: true
+                    }
+                },
+
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                    valueDecimals: 2,
+                    split: true
+                },
+
+                series: seriesOptions
+            });
           }
       });
   });
