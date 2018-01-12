@@ -34,12 +34,15 @@ app.get("/stock/:qwe", function (request, response) {
     tickr.push(element)
   });
   console.log(tickr)
-  const tickers = tickr
   const year = 2018
-  Eod.config({ year, tickers });
-  Eod.fetch()
-  .then((data) => {
-    console.log(data[0]["dataset"]["data"]) //raw JSON response
+  tickr.forEach(function(tick){
+    Eod.config({ year, tick });
+    Eod.fetch()
+    .then((data) => {
+      Object.values(data[0]["dataset"]["data"]).forEach(function(element){
+        element[0] = 
+      }) //raw JSON response
+    })
   })
 });
 
