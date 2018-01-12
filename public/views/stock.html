@@ -18,9 +18,14 @@
 
 <div id="container" style="height: 400px; min-width: 310px"></div>
 
+<input type="texarea"><input type="button" value="go" id="go">
+		
+	</body>
+</html>
 
-		<script type="text/javascript">
-
+<script type="text/javascript">
+document.querySelector("")
+  
 var seriesOptions = [],
     seriesCounter = 0,
     names = ['MSFT', 'AAPL', 'GOOG', 'EBAY'];
@@ -130,12 +135,11 @@ $.each(names, function (i, name) {
         // As we're loading the data asynchronously, we don't know what order it will arrive. So
         // we keep a counter and create the chart when all the data is loaded.
         seriesCounter += 1;
-
+    function go(){
         if (seriesCounter === names.length) {
             createChart();
         }
+    }
     });
 });
 		</script>
-	</body>
-</html>
