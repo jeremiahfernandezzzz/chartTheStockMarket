@@ -27,7 +27,7 @@
 document.querySelector("#go").addEventListener("click", function(){
   var tickers = []
   document.querySelector("#tickers").value.split(",").forEach(function(element){
-    tickers.push(element)
+    tickers.push(element.replace(/\s/g,""))
   })
   go(tickers)
 }, false);
