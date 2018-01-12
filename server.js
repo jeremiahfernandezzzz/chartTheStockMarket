@@ -29,13 +29,16 @@ app.get("/dreams", function (request, response) {
 
 
 app.get("/stock/:qwe", function (request, response) {
-  var tickr = ["haha","hehe"];
-  //request.params.qwe.split(",").forEach(function(element){
-   // tickr.push(element)
- // });
+  //var tickr = ["haha","hehe"];
+  
   //console.log(tickr)
   const year = 2018
-  tickr.forEach(function(tick){
+  const tickers = [];
+  request.params.qwe.split(",").forEach(function(element){
+    tickers.push(element)
+  });
+  //tickers.forEach(function(tick){
+  var tick = ["intc"]
     Eod.config({ year, tick });
     Eod.fetch()
     .then((data) => {
@@ -67,9 +70,10 @@ app.get("/stock/:qwe", function (request, response) {
         var unixTime = date.getTime();
         element[0] = unixTime
       }) //raw JSON response
-      console.log(data[0]["dataset"]["data"])
+      //console.log(data[0]["dataset"]["data"])
     })
-  })
+  //})
+  
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
