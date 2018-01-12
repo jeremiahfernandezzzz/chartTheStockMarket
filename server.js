@@ -35,7 +35,7 @@ app.post("/stock", function (request, response) {
   MongoClient.connect(url, function(err, db){
         if (db){
               console.log("connected to " + url);
-              db.collection("chart-state").insertOne({tickers : request.body.tickers})
+              db.collection("chart-state").insert({tickers : "asd"})
         }
         if (err) {
          console.log("did not connect to " + url)
