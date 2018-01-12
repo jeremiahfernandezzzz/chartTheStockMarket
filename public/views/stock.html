@@ -24,7 +24,9 @@
 </html>
 
 <script type="text/javascript">
-document.querySelector("")
+document.querySelector("#go").addEventListener("click", function(){
+  go()
+}, false);
   
 var seriesOptions = [],
     seriesCounter = 0,
@@ -72,74 +74,56 @@ function createChart() {
     });
 }
 
-$.each(names, function (i, name) {
-	/*
-	
-    $.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?',    function (data) {
-	console.log(typeof(data))
-        seriesOptions[i] = {
-            name: name,
-            data: data
-        };
+function go(){
+  $.each(names, function (i, name) {
+        $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
+        var usefulData = [];
+          var ctr = 0;
+        Object.values(data.dataset_data.data).forEach(function(element){
+          var dateArray = [];
 
-        // As we're loading the data asynchronously, we don't know what order it will arrive. So
-        // we keep a counter and create the chart when all the data is loaded.
-        seriesCounter += 1;
+        element[0].split("-").forEach(function(element){
+          dateArray.push(element)
+        }) ;
 
-        if (seriesCounter === names.length) {
-            createChart();
+        function toMonth(month){
+          if (month == 1) {return "January"}
+          if (month == 2) {return "February"}
+          if (month == 3) {return "March"}
+          if (month == 4) {return "April"}
+          if (month == 5) {return "May"}
+          if (month == 6) {return "June"}
+          if (month == 7) {return "July"}
+          if (month == 8) {return "August"}
+          if (month == 9) {return "September"}
+          if (month == 10) {return "October"}
+          if (month == 11) {return "November"}
+          if (month == 12) {return "December"}
         }
-    });
-	
-	*/
-    $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
-		var usefulData = [];
-			var ctr = 0;
-		Object.values(data.dataset_data.data).forEach(function(element){
-			var dateArray = [];
-			
-			element[0].split("-").forEach(function(element){
-			  dateArray.push(element)
-			}) ;
-			
-			function toMonth(month){
-				if (month == 1) {return "January"}
-				if (month == 2) {return "February"}
-				if (month == 3) {return "March"}
-				if (month == 4) {return "April"}
-				if (month == 5) {return "May"}
-				if (month == 6) {return "June"}
-				if (month == 7) {return "July"}
-				if (month == 8) {return "August"}
-				if (month == 9) {return "September"}
-				if (month == 10) {return "October"}
-				if (month == 11) {return "November"}
-				if (month == 12) {return "December"}
-			}
-			
-			dateArray[1] = toMonth(dateArray[1])
-			//console.log("year" + date[0] + " month" + date[1] + " date" + date[2])
-			var date = new Date(dateArray[1] + " " + dateArray[2] + " " + dateArray[0])
-			var unixTime = date.getTime();
-			element[0] = unixTime;
-			usefulData.push([element[0],element[4]]);
-			ctr++;
-		})
-		console.log(typeof(usefulData))
-		//document.getElementById("data").innerHTML = JSON.stringify(usefulData);
-        seriesOptions[i] = {
-            name: name,
-            data: usefulData
-        };
 
-        // As we're loading the data asynchronously, we don't know what order it will arrive. So
-        // we keep a counter and create the chart when all the data is loaded.
-        seriesCounter += 1;
-    function go(){
-        if (seriesCounter === names.length) {
-            createChart();
-        }
-    }
-    });
-});
+        dateArray[1] = toMonth(dateArray[1])
+        //console.log("year" + date[0] + " month" + date[1] + " date" + date[2])
+        var date = new Date(dateArray[1] + " " + dateArray[2] + " " + dateArray[0])
+        var unixTime = date.getTime();
+        element[0] = unixTime;
+        usefulData.push([element[0],element[4]]);
+        ctr++;
+      })
+      console.log(typeof(usefulData))
+      //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
+          seriesOptions[i] = {
+              name: name,
+              data: usefulData
+          };
+
+          // As we're loading the data asynchronously, we don't know what order it will arrive. So
+          // we keep a counter and create the chart when all the data is loaded.
+          seriesCounter += 1;
+
+          if (seriesCounter === names.length) {
+              createChart();
+          }
+      });
+  });
+}
 		</script>
