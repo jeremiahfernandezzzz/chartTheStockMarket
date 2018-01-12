@@ -5,18 +5,16 @@
 var express = require('express');
 var app = express();
 
+const quandlEodHelper = require('quandl-eod-helper');
+const Eod = new quandlEodHelper();
+const year = '2016'
+const tickers = ['AAPL', 'MSFT']
+Eod.config({ year, tickers });
+
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
-// http://expressjs.com/en/starter/static-files.html
-var Quandl = require("quandl");
-var quandl = new Quandl();
- 
-var options = {
-    api_key: '9DL8AEJpLQna4YsPswnY'
-}
- 
-quandl.configure(options);
+// http://expressjs.com/en/starter/static-files.html=
 
 app.use(express.static(__dirname + '/public/views'));
 
@@ -33,12 +31,10 @@ app.get("/dreams", function (request, response) {
 
 
 app.get("/stock", function (request, response) {
-  quandl.dataset({ source: "BITCOIN", table: "MTGOXUSD" }, function(err, response){
-    if(err)
-        throw err;
- 
-    console.log(response);
-  });
+  Eod.fetch()
+  .then((data) => {
+    response.send(data["dataset"]["data"]) //raw JSON response
+  })
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body

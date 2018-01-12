@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "express": "^4.16.2",
-    "quandl": "0.0.6"
+    "quandl": "0.0.6",
+    "quandl-eod-helper": "^1.2.5"
   },
   "engines": {
     "node": "8.x"
