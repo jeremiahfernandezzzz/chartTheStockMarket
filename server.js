@@ -31,6 +31,10 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/public/views/stock.html');
 });
 
+app.get("/admin", function (request, response) {
+  response.send("asdasd");
+});
+
 app.post("/stock", function (request, response) {
   MongoClient.connect(url, function(err, db){
         if (db){
