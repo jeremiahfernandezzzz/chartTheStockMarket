@@ -28,12 +28,11 @@ io.on('connection', function(socket){
   socket.on('ferret', (name, fn) => {
     fn('woot');
   });
+  socket.on('event1', (name, fn) => {
+    fn('woot');
+  });
   //io.emit('this', "asdasd");
   //io.emit('event', asd); // main namespace
-});
-
-io.on('event1', function(socket){
-  io.emit(asd); // main namespace
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
