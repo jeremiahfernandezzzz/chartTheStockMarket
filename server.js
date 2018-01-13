@@ -10,7 +10,9 @@ var url = process.env.DB_URL;
 
 const quandlEodHelper = require('quandl-eod-helper');
 const Eod = new quandlEodHelper();
-//const year = '2016'
+//const year = '2016';
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -20,6 +22,9 @@ const Eod = new quandlEodHelper();
 app.use(express.static(__dirname + '/public/views'));
 
 
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
