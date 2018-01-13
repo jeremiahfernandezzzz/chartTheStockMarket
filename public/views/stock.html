@@ -36,7 +36,10 @@
 <script type="text/javascript">
   
 document.querySelector("#go").addEventListener("click", function(){
-  
+  socket.on("event1", function (data){
+    console.log(data);
+  });
+
   var tickers = []
   document.querySelector("#tickers").value.split(",").forEach(function(element){
     tickers.push(element.replace(/\s/g,""))

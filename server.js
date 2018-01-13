@@ -21,7 +21,7 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public/views'));
 
-
+var asd = "asdasdasdasd"
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -29,7 +29,11 @@ io.on('connection', function(socket){
     fn('woot');
   });
   //io.emit('this', "asdasd");
-  io.emit('event', 'an event sent to all connected clients'); // main namespace
+  //io.emit('event', asd); // main namespace
+});
+
+io.on('event1', function(socket){
+  io.emit(asd); // main namespace
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
