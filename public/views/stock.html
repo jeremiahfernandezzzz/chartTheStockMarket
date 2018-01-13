@@ -14,11 +14,9 @@
 		</style>
     <script>
       var socket = io();
-      socket.emit('ferret', 'tobi', (data) => {
-        console.log(data); // data will be 'woot'
-      });
-      socket.emit('tickback', (data) => {
-        console.log(data); // data will be 'woot'
+      socket.on('tickback', function(ticker){
+        console.log(ticker)
+        go(ticker)
       });
     </script>
   </head>

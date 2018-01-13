@@ -28,9 +28,6 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-  socket.on('ferret', (name, fn) => {
-    fn('woot');
-  });
   socket.on('tickers', function(msg){
     tickers = msg
     console.log(tickers)
