@@ -22,12 +22,14 @@ var io = require('socket.io')(http);
 app.use(express.static(__dirname + '/public/views'));
 
 
+
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('ferret', (name, fn) => {
     fn('woot');
   });
   //io.emit('this', "asdasd");
+  io.emit('event', 'an event sent to all connected clients'); // main namespace
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
