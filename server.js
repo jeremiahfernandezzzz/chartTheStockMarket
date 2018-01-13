@@ -44,10 +44,10 @@ app.post("/stock", function (request, response) {
 });
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
-
-//http.listen(process.env.PORT, function(){
-//  console.log('listening on *:3000');
+//var listener = app.listen(process.env.PORT, function () {
+//  console.log('Your app is listening on port ' + listener.address().port);
 //});
+
+http.listen(process.env.PORT, function(){
+  console.log('listening on *:3000');
+});
