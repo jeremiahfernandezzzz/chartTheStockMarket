@@ -3,7 +3,7 @@
 
 // init project
 var express = require('express');
-var app = express();
+var app = require('express')();
 var mongodb = require("mongodb")
 var MongoClient = mongodb.MongoClient;
 var url = process.env.DB_URL;
@@ -47,3 +47,7 @@ app.post("/stock", function (request, response) {
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+//http.listen(process.env.PORT, function(){
+//  console.log('listening on *:3000');
+//});
