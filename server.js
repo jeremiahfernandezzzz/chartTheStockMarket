@@ -21,18 +21,23 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public/views'));
 
-var asd = "asdasdasdasd"
+var tickers = []
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('a user connected');  
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
   socket.on('ferret', (name, fn) => {
     fn('woot');
   });
-  socket.on('event1', (name, fn) => {
-    fn('woot');
+  socket.on('tickers', function(msg){
+    tickers = msg
+    console.log(tickers)
+    io.emit("tickback", tickers);
   });
-  //io.emit('this', "asdasd");
   //io.emit('event', asd); // main namespace
+
 });
 
 // http://expressjs.com/en/starter/basic-routing.html

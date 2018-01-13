@@ -17,10 +17,9 @@
       socket.emit('ferret', 'tobi', (data) => {
         console.log(data); // data will be 'woot'
       });
-      socket.on("event", function (data){
-          console.log(data);
+      socket.emit('tickback', (data) => {
+        console.log(data); // data will be 'woot'
       });
-
     </script>
   </head>
 	<body>
@@ -36,7 +35,6 @@
 <script type="text/javascript">
   
 document.querySelector("#go").addEventListener("click", function(){
-  io.emit("event1", "datadata")
 
   var tickers = []
   document.querySelector("#tickers").value.split(",").forEach(function(element){
@@ -44,6 +42,7 @@ document.querySelector("#go").addEventListener("click", function(){
   })
   
   go(tickers)
+  socket.emit('tickers', tickers);
 }, false);
   
 /**
