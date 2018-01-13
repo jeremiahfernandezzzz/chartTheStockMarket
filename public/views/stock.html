@@ -4,17 +4,20 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Highstock Example</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="/js/highstock.js"></script>
+    <script src="/js/exporting.js"></script>
+    <script src="/js/socket.io.js"></script>
 
 		<style type="text/css">
 
 		</style>
-	</head>
+    <script>
+      var socket = io()
+    </script>
+  </head>
 	<body>
 	<div id="data"></div>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="/js/highstock.js"></script>
-<script src="/js/exporting.js"></script>
-<script src="/js/socket.io.js"></script>
 
 <div id="container" style="height: 400px; min-width: 310px"></div>
 
@@ -24,7 +27,6 @@
 </html>
 
 <script type="text/javascript">
-  var socket = io();
   
 document.querySelector("#go").addEventListener("click", function(){
   var tickers = []
