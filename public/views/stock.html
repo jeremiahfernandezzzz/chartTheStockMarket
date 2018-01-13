@@ -14,10 +14,9 @@
 		</style>
     <script>
       var socket = io();
-      socket.emit('ferret', 'tobi', (data) => {
+      io.emit('ferret', 'tobi', (data) => {
         console.log(data); // data will be 'woot'
       });
-      io.emit('this', ()
     </script>
   </head>
 	<body>

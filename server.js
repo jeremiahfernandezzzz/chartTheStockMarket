@@ -23,12 +23,11 @@ app.use(express.static(__dirname + '/public/views'));
 
 
 io.on('connection', function(socket){
-  io.emit('this', { will: 'be received by everyone'});
   console.log('a user connected');
   socket.on('ferret', (name, fn) => {
-      fn('woot');
-      io.emit('this', { will: 'be received by everyone'});
-    });
+    fn('woot');
+  });
+  //io.emit('this', "asdasd");
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
