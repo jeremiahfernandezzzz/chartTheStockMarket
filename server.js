@@ -24,15 +24,14 @@ app.use(express.static(__dirname + '/public/views'));
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('ferret', (name, fn) => {
+      fn('woot');
+    });
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/public/views/stock.html');
-});
-
-app.get("/admin", function (request, response) {
-  response.send("asdasd");
 });
 
 app.post("/stock", function (request, response) {

@@ -13,8 +13,10 @@
 
 		</style>
     <script>
-      var socket = io()
-      var adminSocket = io('/admin')
+      var socket = io();
+      socket.emit('ferret', 'tobi', (data) => {
+        console.log(data); // data will be 'woot'
+      });
     </script>
   </head>
 	<body>
