@@ -17,6 +17,10 @@
       socket.emit('ferret', 'tobi', (data) => {
         console.log(data); // data will be 'woot'
       });
+      socket.on("event", function (data){
+          console.log(data);
+      });
+
     </script>
   </head>
 	<body>
@@ -32,6 +36,7 @@
 <script type="text/javascript">
   
 document.querySelector("#go").addEventListener("click", function(){
+  
   var tickers = []
   document.querySelector("#tickers").value.split(",").forEach(function(element){
     tickers.push(element.replace(/\s/g,""))
