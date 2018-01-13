@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="/js/highstock.js"></script>
 <script src="/js/exporting.js"></script>
-
+<script src="/js/socket.io.js"></script>
 
 <div id="container" style="height: 400px; min-width: 310px"></div>
 
@@ -24,6 +24,8 @@
 </html>
 
 <script type="text/javascript">
+  var socket = io();
+  
 document.querySelector("#go").addEventListener("click", function(){
   var tickers = []
   document.querySelector("#tickers").value.split(",").forEach(function(element){
