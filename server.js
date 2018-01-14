@@ -25,11 +25,30 @@ var tickers = []
 
 io.on('connection', function(socket){
   console.log('a user connected');  
+  MongoClient.connect(url, function(err, db){
+      if (db){
+            console.log("connected to " + url);
+            db.collection("chart-state").findOne({})
+            io.emit("tickback", tickers);
+      }
+      if (err) {
+       console.log("did not connect to " + url)
+      }
+    })
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
   socket.on('tickers', function(msg){
     tickers = msg
+    MongoClient.connect(url, function(err, db){
+      if (db){
+            console.log("connected to " + url);
+            db.collection("chart-state").insert({tickers : tickers})
+      }
+      if (err) {
+       console.log("did not connect to " + url)
+      }
+    })
     console.log(tickers)
     io.emit("tickback", tickers);
   });
@@ -44,14 +63,14 @@ app.get("/", function (request, response) {
 
 app.post("/stock", function (request, response) {
   MongoClient.connect(url, function(err, db){
-        if (db){
-              console.log("connected to " + url);
-              db.collection("chart-state").insert({tickers : "asd"})
-        }
-        if (err) {
-         console.log("did not connect to " + url)
-        }
-      })
+    if (db){
+          console.log("connected to " + url);
+          db.collection("chart-state").insert({tickers : "asd"})
+    }
+    if (err) {
+     console.log("did not connect to " + url)
+    }
+  })
 });
 
 // listen for requests :)
