@@ -38,10 +38,9 @@ document.querySelector("#go").addEventListener("click", function(){
   document.querySelector("#tickers").value.split(",").forEach(function(element){
     tickers.push(element.replace(/\s/g,""))
   })
-  
-  socket.emit('tickers', tickers);
 }, false);
   
+go(tickers)  
 /**
  * Create the chart when all data is loaded
  * @returns {undefined}
@@ -54,7 +53,8 @@ function go(tickers){
   $.each(names, function (i, name) {
         $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
         //if (typeof(data) == "object"){
-          socket.emit('status', "ok")
+          //socket.emit('status', "ok")
+          socket.emit('tickers', tickers);
         //} else {
         //}
           var usefulData = [];

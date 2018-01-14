@@ -42,9 +42,8 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
   socket.on('tickers', function(tick){
-    socket.on('status', function(status){
-      console.log(status)
-      if(status == "ok"){
+      console.log(tick)
+      if(tick){
         tickers = tick
         MongoClient.connect(url, function(err, db){
           if (db){
@@ -58,7 +57,6 @@ io.on('connection', function(socket){
           }
         })
       }
-    })
   });
   //io.emit('event', asd); // main namespace
 
