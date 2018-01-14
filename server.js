@@ -41,10 +41,11 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-  socket.on('tickers', function(msg){
-    socket.on('status', function(msg){
-      if(msg == "ok"){
-        tickers = msg
+  socket.on('tickers', function(tick){
+    socket.on('status', function(status){
+      console.log(status)
+      if(status == "ok"){
+        tickers = tick
         MongoClient.connect(url, function(err, db){
           if (db){
                 console.log("connected to " + url);

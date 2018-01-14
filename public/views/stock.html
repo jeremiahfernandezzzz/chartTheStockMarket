@@ -39,7 +39,6 @@ document.querySelector("#go").addEventListener("click", function(){
     tickers.push(element.replace(/\s/g,""))
   })
   
-  go(tickers)
   socket.emit('tickers', tickers);
 }, false);
   
