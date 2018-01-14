@@ -13,11 +13,11 @@
 
 		</style>
     <script>
-      var socket = io();
-      socket.on('tickback', function(ticker){
-        console.log(ticker)
-        go(ticker)
-      });
+      //var socket = io();
+      //socket.on('tickback', function(ticker){
+        //console.log(ticker)
+        //go(ticker)
+      //});
     </script>
   </head>
 	<body>
@@ -40,7 +40,7 @@ document.querySelector("#go").addEventListener("click", function(){
   })
 }, false);
   
-go(tickers)  
+//go(tickers)  
 /**
  * Create the chart when all data is loaded
  * @returns {undefined}
@@ -54,7 +54,6 @@ function go(tickers){
         $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
         //if (typeof(data) == "object"){
           //socket.emit('status', "ok")
-          socket.emit('tickers', tickers);
         //} else {
         //}
           var usefulData = [];
@@ -89,7 +88,7 @@ function go(tickers){
         usefulData.push([element[0],element[4]]);
         ctr++;
       })
-      console.log(typeof(usefulData))
+      console.log(usefulData)
       //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
           seriesOptions[i] = {
               name: name,
@@ -137,9 +136,7 @@ function go(tickers){
                 series: seriesOptions
             });
           }
-      }).fail(function(jqXHR) {
-           socket.emit('status', "not ok")
-      });;
+      })
   });
 }
 		</script>

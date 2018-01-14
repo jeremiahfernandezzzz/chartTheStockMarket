@@ -23,6 +23,7 @@ app.use(express.static(__dirname + '/public/views'));
 
 var tickers = []
 
+/*
 io.on('connection', function(socket){
   console.log('a user connected');  
   MongoClient.connect(url, function(err, db){
@@ -61,7 +62,7 @@ io.on('connection', function(socket){
   //io.emit('event', asd); // main namespace
 
 });
-
+*/
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/public/views/stock.html');
