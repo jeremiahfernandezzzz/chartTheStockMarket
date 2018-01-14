@@ -29,7 +29,7 @@ io.on('connection', function(socket){
       if (db){
             console.log("connected to " + url);
             db.collection("chart-state").find({}).sort({_id: -1}).toArray().then(function(element){
-              //console.log(element[0])
+              console.log(element[0])
               tickers = element[0].tickers
             })
             io.emit("tickback", tickers);
@@ -42,21 +42,22 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
   socket.on('tickers', function(msg){
-    tickers = msg
-    MongoClient.connect(url, function(err, db){
-      if (db){
-            console.log("connected to " + url);
-            db.collection("chart-state").insert({tickers : tickers})
-      }
-      if (err) {
-       console.log("did not connect to " + url)
-      }
-    })
     socket.on('status', function(msg){
-      console.log(msg)
+      if(msg == "ok"){
+        tickers = msg
+        MongoClient.connect(url, function(err, db){
+          if (db){
+                console.log("connected to " + url);
+                db.collection("chart-state").insert({tickers : tickers})
+                console.log(tickers)
+                io.emit("tickback", tickers);
+          }
+          if (err) {
+           console.log("did not connect to " + url)
+          }
+        })
+      }
     })
-    console.log(tickers)
-    io.emit("tickback", tickers);
   });
   //io.emit('event', asd); // main namespace
 
