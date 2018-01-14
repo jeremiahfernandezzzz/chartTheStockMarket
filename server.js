@@ -28,8 +28,9 @@ io.on('connection', function(socket){
   MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
-            db.collection("chart-state").findOne({}).then(function(element){
-              tickers = element.tickers
+            db.collection("chart-state").find({}).sort({_id: -1}).toArray().then(function(element){
+              //console.log(element[0])
+              tickers = element[0].tickers
             })
             io.emit("tickback", tickers);
       }
@@ -50,6 +51,9 @@ io.on('connection', function(socket){
       if (err) {
        console.log("did not connect to " + url)
       }
+    })
+    socket.on('status', function(msg){
+      console.log(msg)
     })
     console.log(tickers)
     io.emit("tickback", tickers);

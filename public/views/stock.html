@@ -54,7 +54,12 @@ function go(tickers){
   names = tickers;
   $.each(names, function (i, name) {
         $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
-        var usefulData = [];
+        if (data){
+          socket.emit('status', "ok")
+        } else {
+          socket.emit('status', "not ok")
+        }
+          var usefulData = [];
           var ctr = 0;
         Object.values(data.dataset_data.data).forEach(function(element){
           var dateArray = [];
