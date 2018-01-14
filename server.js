@@ -28,7 +28,9 @@ io.on('connection', function(socket){
   MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
-            db.collection("chart-state").findOne({})
+            db.collection("chart-state").findOne({}).then(function(element){
+              tickers = element.tickers
+            })
             io.emit("tickback", tickers);
       }
       if (err) {
