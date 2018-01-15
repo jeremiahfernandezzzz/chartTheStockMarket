@@ -27,7 +27,7 @@ io.on('connection', function(socket){
   console.log('a user connected');  
   MongoClient.connect(url, function(err, db){
       if (db){
-          var tickers = []
+          //var tickers = []
             console.log("connected to " + url);
             db.collection("chart-state").find({}).forEach(function(element){
               //console.log("dbsdf" + JSON.stringify(element.ticker))
