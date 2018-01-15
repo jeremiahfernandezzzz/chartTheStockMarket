@@ -30,6 +30,8 @@ var seriesOptions = [],
 seriesCounter = 0
 var socket = io();
 socket.on('tickback', function(ticker){
+  seriesOptions = 
+  /*
   go(ticker)
   console.log(ticker)
   var x = document.createElement("a");
@@ -43,6 +45,7 @@ socket.on('tickback', function(ticker){
     e.preventDefault()
     socket.emit("delete", this.id)
   })
+  */
 });
   
 
