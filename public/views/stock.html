@@ -18,7 +18,7 @@
 	<body>
 	<div id="data"></div>
 
-<div id="container" style="height: 400px; min-width: 310px"></div>
+<div id="container" style="height: 400px; min-width: 310px; font-family: Consolas">Loading charts..</div>
 
 <input type="texarea" id="tickers"><input type="button" value="go" id="go"><input type="button" value="remove" id="remove">
 		
@@ -30,6 +30,9 @@
   
 var socket = io();
 socket.on('tickback', function(ticker){
+  if (ticker.length == 0){
+    document.querySelector("#container").innerHTML = "No data at the moment"
+  }
   seriesCounter = 0,
   
   console.log(ticker)
@@ -43,6 +46,14 @@ socket.on('tickadded', function(ticker){
   
 socket.on('tickexists', function(ticker){
  alert(ticker + " already added")
+});
+  
+socket.on('tickalreadyremoved', function(ticker){
+ alert(ticker + " already removed")
+});
+  
+socket.on('tickremoved', function(ticker){
+ alert(ticker + " removed")
 });
   
 document.querySelector("#go").addEventListener("click", function(){
