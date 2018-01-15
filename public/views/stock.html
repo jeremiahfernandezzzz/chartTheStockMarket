@@ -44,12 +44,10 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-    seriesOptions[seriesOptions.length] = {
-            name: name,
-            data: usefulData
-        };
+    delete seriesOptions[seriesOptions.length-1]
         
-        seriesCounter -=1 ;
+    //seriesCounter -=1 ;
+    draw(seriesOptions)
 }, false);
   
   
@@ -101,10 +99,9 @@ function go(ticker){
         };
         
         seriesCounter +=1 ;
-        // As we're loading the data asynchronously, we don't know what order it will arrive. So
-        // we keep a counter and create the chart when all the data is loaded.
+        // As we're loading the data asynchronously, we don't know what order it w
+        draw(seriesOptions)
 
-      draw(seriesOptions)
     })
 }
   
