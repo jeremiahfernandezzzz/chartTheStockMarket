@@ -18,7 +18,6 @@
       socket.on('tickback', function(ticker){
         console.log(ticker)
         go(ticker)
-        draw(seriesOptions)
       });
     </script>
   </head>
@@ -42,7 +41,7 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-    console.log(seriesOptions)
+        draw(seriesOptions)
 }, false);
   
   
