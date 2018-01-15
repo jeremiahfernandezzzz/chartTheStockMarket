@@ -33,103 +33,105 @@
 <script type="text/javascript">
   
 document.querySelector("#go").addEventListener("click", function(){
-
   var ticker = []
   ticker[0] = document.querySelector("#tickers").value
   go(ticker)  
+  draw(seriesOptions)
 }, false);
   
 /**
  * Create the chart when all data is loaded
  * @returns {undefined}
  */
-var seriesOptions = [];
 
+var seriesOptions = [];
+  var series
 function go(ticker){
   name = ticker;
-        $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
-        //if (typeof(data) == "object"){
-        socket.emit('status', data)
-        //} else {
-        //}
-          var usefulData = [];
-          var ctr = 0;
-        Object.values(data.dataset_data.data).forEach(function(element){
-          var dateArray = [];
+      $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
+      //if (typeof(data) == "object"){
+      socket.emit('status', data)
+      //} else {
+      //}
+        var usefulData = [];
+        var ctr = 0;
+      Object.values(data.dataset_data.data).forEach(function(element){
+        var dateArray = [];
 
-        element[0].split("-").forEach(function(element){
-          dateArray.push(element)
-        }) ;
+      element[0].split("-").forEach(function(element){
+        dateArray.push(element)
+      }) ;
 
-        function toMonth(month){
-          if (month == 1) {return "January"}
-          if (month == 2) {return "February"}
-          if (month == 3) {return "March"}
-          if (month == 4) {return "April"}
-          if (month == 5) {return "May"}
-          if (month == 6) {return "June"}
-          if (month == 7) {return "July"}
-          if (month == 8) {return "August"}
-          if (month == 9) {return "September"}
-          if (month == 10) {return "October"}
-          if (month == 11) {return "November"}
-          if (month == 12) {return "December"}
-        }
+      function toMonth(month){
+        if (month == 1) {return "January"}
+        if (month == 2) {return "February"}
+        if (month == 3) {return "March"}
+        if (month == 4) {return "April"}
+        if (month == 5) {return "May"}
+        if (month == 6) {return "June"}
+        if (month == 7) {return "July"}
+        if (month == 8) {return "August"}
+        if (month == 9) {return "September"}
+        if (month == 10) {return "October"}
+        if (month == 11) {return "November"}
+        if (month == 12) {return "December"}
+      }
 
-        dateArray[1] = toMonth(dateArray[1])
-        //console.log("year" + date[0] + " month" + date[1] + " date" + date[2])
-        var date = new Date(dateArray[1] + " " + dateArray[2] + " " + dateArray[0])
-        var unixTime = date.getTime();
-        element[0] = unixTime;
-        usefulData.push([element[0],element[4]]);
-        ctr++;
-      })
-      console.log(usefulData)
-      //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
-          seriesOptions[seriesOptions.length] = {
-              name: name,
-              data: usefulData
-          };
-          draw(seriesOptions)
-          // As we're loading the data asynchronously, we don't know what order it will arrive. So
-          // we keep a counter and create the chart when all the data is loaded.
+      dateArray[1] = toMonth(dateArray[1])
+      //console.log("year" + date[0] + " month" + date[1] + " date" + date[2])
+      var date = new Date(dateArray[1] + " " + dateArray[2] + " " + dateArray[0])
+      var unixTime = date.getTime();
+      element[0] = unixTime;
+      usefulData.push([element[0],element[4]]);
+      ctr++;
+    })
+    console.log(usefulData)
+    //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
+        seriesOptions[seriesOptions.length] = {
+            name: name,
+            data: usefulData
+        };
+        // As we're loading the data asynchronously, we don't know what order it will arrive. So
+        // we keep a counter and create the chart when all the data is loaded.
 
-            function draw(seriesOptions){
-              Highcharts.stockChart('container', {
-
-                rangeSelector: {
-                    selected: 4
-                },
-
-                yAxis: {
-                    labels: {
-                        formatter: function () {
-                            return (this.value > 0 ? ' + ' : '') + this.value + '%';
-                        }
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 2,
-                        color: 'silver'
-                    }]
-                },
-
-                plotOptions: {
-                    series: {
-                        compare: 'percent',
-                        showInNavigator: true
-                    }
-                },
-
-                tooltip: {
-                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                    valueDecimals: 2,
-                    split: true
-                },
-
-                series: seriesOptions
-            });
-          }
-      })
+    })
 }
+  
+  
+    function draw(seriesOptions){
+      Highcharts.stockChart('container', {
+
+        rangeSelector: {
+            selected: 4
+        },
+
+        yAxis: {
+            labels: {
+                formatter: function () {
+                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                }
+            },
+            plotLines: [{
+                value: 0,
+                width: 2,
+                color: 'silver'
+            }]
+        },
+
+        plotOptions: {
+            series: {
+                compare: 'percent',
+                showInNavigator: true
+            }
+        },
+
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+            valueDecimals: 2,
+            split: true
+        },
+
+        series: seriesOptions
+    });
+  }
 		</script>
