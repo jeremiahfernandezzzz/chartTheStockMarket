@@ -62,8 +62,8 @@ document.querySelector("#remove").addEventListener("click", function(){
 function check(ticker){
   $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + ticker + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
     //if(data.quandl_error){
-      console.log(data.quandl_error)
-    //}
+      socket.emit("data", ticker)
+    //asda}
   })
 }
 
