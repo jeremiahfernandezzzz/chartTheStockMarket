@@ -36,9 +36,8 @@ var seriesArray = [];
 var seriesCounter = 0;
   
 document.querySelector("#go").addEventListener("click", function(){
-  var ticker = []
-  ticker[0] = document.querySelector("#tickers").value
-  go(ticker)  
+  
+  socket.emit('data', document.querySelector("#tickers").value)
 }, false);
 /**
  * Create the chart when all data is loaded
@@ -57,7 +56,6 @@ document.querySelector("#remove").addEventListener("click", function(){
       ctr++
     })
         
-    draw(seriesOptions)
 }, false);
   
   
@@ -100,18 +98,19 @@ function go(ticker){
       usefulData.push([element[0],element[4]]);
       ctr++;
     })
-    socket.emit('data', name)
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
    // seriesArray.push([name, usefulData])
-    //    seriesOptions[seriesOptions.length] = {
-   //         name: name,
-    //        data: usefulData
-   //     };
+        seriesOptions[seriesOptions.length] = {
+            name: name,
+            data: usefulData
+        };
         
         // As we're loading the data asynchronously, we don't know what order it w
         //draw(seriesOptions)
 
     })
+    draw(seriesOptions)
+  
 }
   
   
