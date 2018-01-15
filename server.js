@@ -28,8 +28,8 @@ io.on('connection', function(socket){
   MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
-            db.collection("chart-state").find({}).sort({_id: -1}).toArray().then(function(element){
-              console.log("db" + element.ticker)
+            db.collection("chart-state").find({}).sort({_id: -1}).forEach(function(element){
+              //console.log("dbsdf" + JSON.stringify(element.ticker))
               io.emit("tickback", element.ticker);
             })
       }
@@ -45,11 +45,12 @@ io.on('connection', function(socket){
     MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
-            db.collection("chart-state").find({ticker: data}).then(function(element){
+            db.collection("chart-state").find({ticker: data}).toArray().then(function(element){
               if (element){
-                db.collection("chart-state").insert({ticker : data})
-              } else {
                 console.log("ticker already exists")
+              } else {
+                console.log(data + "inserted")
+                db.collection("chart-state").insert({ticker : data})
               }
             })
             console.log(data)
