@@ -28,27 +28,11 @@
 <script type="text/javascript">
 var seriesOptions = [],
 seriesCounter = 0
+names = [];
 var socket = io();
 socket.on('tickback', function(ticker){
-  seriesOptions = 
-  /*
-  go(ticker)
-  console.log(ticker)
-  var x = document.createElement("a");
-  x.innerHTML = ticker
-  x.setAttribute("class", "ticker")
-  x.setAttribute("href", "/")
-  x.setAttribute("id", ticker)
-  document.body.append(x)
-    
-  x.addEventListener("click", function(e){
-    e.preventDefault()
-    socket.emit("delete", this.id)
-  })
-  */
+  names = ticker
 });
-  
-
   
 document.querySelector("#go").addEventListener("click", function(){
   check(document.querySelector("#tickers").value)  
@@ -58,9 +42,58 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-        draw(seriesOptions)
+    draw(seriesOptions)
 }, false);
   
+  //assddddddddddddddddddddddddddddddddddddddddddddddddddddd
+
+/**
+ * Create the chart when all data is loaded
+ * @returns {undefined}
+ */
+function createChart() {
+
+    Highcharts.stockChart('container', {
+
+        rangeSelector: {
+            selected: 4
+        },
+
+        yAxis: {
+            labels: {
+                formatter: function () {
+                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                }
+            },
+            plotLines: [{
+                value: 0,
+                width: 2,
+                color: 'silver'
+            }]
+        },
+
+        plotOptions: {
+            series: {
+                compare: 'percent',
+                showInNavigator: true
+            }
+        },
+
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+            valueDecimals: 2,
+            split: true
+        },
+
+        series: seriesOptions
+    });
+}
+
+$.each(names, function (i, name) {
+	
+	
+});
+  //assddddddddddddddddddddddddddddddddddddddddddddddddddddd
   
 function check(ticker){
   $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + ticker + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
@@ -110,49 +143,15 @@ function go(ticker){
     })
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
    // seriesArray.push([name, usefulData])
-        seriesOptions[seriesOptions.length] = {
-            name: ticker,
+        seriesOptions[i] = {
+            name: name,
             data: usefulData
         };
         
+       if (seriesCounter === names.length) {
+            createChart();
+        }
     })
+  
 }
-  
-  
-    function draw(seriesOptions){
-          Highcharts.stockChart('container', {
-
-            rangeSelector: {
-                selected: 4
-            },
-
-            yAxis: {
-                labels: {
-                    formatter: function () {
-                        return (this.value > 0 ? ' + ' : '') + this.value + '%';
-                    }
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 2,
-                    color: 'silver'
-                }]
-            },
-
-            plotOptions: {
-                series: {
-                    compare: 'percent',
-                    showInNavigator: true
-                }
-            },
-
-            tooltip: {
-                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                valueDecimals: 2,
-                split: true
-            },
-
-            series: seriesOptions
-        });
-    }
 		</script>
