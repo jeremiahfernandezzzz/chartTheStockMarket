@@ -32,6 +32,7 @@
 
 <script type="text/javascript">
 var seriesOptions = [];
+var seriesArray = [];
 var seriesCounter = 0;
   
 document.querySelector("#go").addEventListener("click", function(){
@@ -44,9 +45,16 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-    delete seriesOptions[seriesOptions.length-1]
+    seriesArray.pop()
+    seriesArray.forEach(function(element){
+        seriesOptions[seriesArray.length] = {
+          name: element[0],
+          data: element[1]
+        };
+      //console.log(element[0] + element[1])
+    })
         
-    //seriesCounter -=1 ;
+    seriesCounter -=1 ;
     draw(seriesOptions)
 }, false);
   
