@@ -16,7 +16,7 @@
       var socket = io();
       socket.on('tickback', function(ticker){
         console.log(ticker)
-        go(ticker)
+        //go(ticker)
       });
     </script>
   </head>
@@ -100,7 +100,7 @@ function go(ticker){
       usefulData.push([element[0],element[4]]);
       ctr++;
     })
-    socket.emit('data', data)
+    socket.emit('data', name)
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
    // seriesArray.push([name, usefulData])
     //    seriesOptions[seriesOptions.length] = {

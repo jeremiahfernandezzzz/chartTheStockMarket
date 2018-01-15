@@ -30,8 +30,8 @@ io.on('connection', function(socket){
       if (db){
             console.log("connected to " + url);
             db.collection("chart-state").find({}).sort({_id: -1}).toArray().then(function(element){
-              console.log(element)
-              tickers = element
+              console.log("db" + element)
+              tickers = element.tickers
             })
             io.emit("tickback", tickers);
       }
@@ -43,6 +43,7 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
   socket.on('data', function(data){
+    console.log(data)
     var tickers = data
     MongoClient.connect(url, function(err, db){
       if (db){
