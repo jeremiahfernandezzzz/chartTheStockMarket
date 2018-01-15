@@ -18,7 +18,10 @@
       var socket = io();
       socket.on('tickback', function(ticker){
         console.log(ticker)
-        vax = createElement
+        var x = document.createElement("a");
+        x.innerHTML = ticker
+        x.setAttribute("href", "/" + ticker)
+        document.body.append(x)
       });
     </script>
   </head>
