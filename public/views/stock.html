@@ -57,7 +57,6 @@ document.querySelector("#remove").addEventListener("click", function(){
       ctr++
     })
         
-    seriesCounter = seriesOptions.length ;
     draw(seriesOptions)
 }, false);
   
@@ -67,7 +66,6 @@ function go(ticker){
   name = ticker;
       $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
       //if (typeof(data) == "object"){
-      socket.emit('status', data)
       //} else {
       //}
         var usefulData = [];
@@ -102,24 +100,22 @@ function go(ticker){
       usefulData.push([element[0],element[4]]);
       ctr++;
     })
-    console.log(usefulData)
+    socket.emit('data', data)
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
-    seriesArray.push([name, usefulData])
-        seriesOptions[seriesOptions.length] = {
-            name: name,
-            data: usefulData
-        };
+   // seriesArray.push([name, usefulData])
+    //    seriesOptions[seriesOptions.length] = {
+   //         name: name,
+    //        data: usefulData
+   //     };
         
-        seriesCounter +=1 ;
         // As we're loading the data asynchronously, we don't know what order it w
-        draw(seriesOptions)
+        //draw(seriesOptions)
 
     })
 }
   
   
     function draw(seriesOptions){
-      if (seriesCounter == seriesOptions.length){
           Highcharts.stockChart('container', {
 
             rangeSelector: {
@@ -154,6 +150,5 @@ function go(ticker){
 
             series: seriesOptions
         });
-      }
     }
 		</script>

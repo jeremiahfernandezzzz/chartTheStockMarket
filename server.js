@@ -42,8 +42,8 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-  socket.on('status', function(tick){
-      console.log(tick)
+  socket.on('data', function(data){
+      console.log(data)
     /*
     if(tick){
         tickers = tick
