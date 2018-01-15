@@ -26,16 +26,15 @@
 </html>
 
 <script type="text/javascript">
-  
-var seriesOptions = [],
-seriesCounter = 0,
-names = [];
+ 
   
 var socket = io();
 socket.on('tickback', function(ticker){
+  seriesCounter = 0,
+  
   console.log(ticker)
-  names = ticker;
-  go()
+  //names = ticker;
+  go(ticker)
 });
   
 document.querySelector("#go").addEventListener("click", function(){
@@ -55,7 +54,7 @@ document.querySelector("#remove").addEventListener("click", function(){
  * Create the chart when all data is loaded
  * @returns {undefined}
  */
-function createChart() {
+function createChart(seriesOptions) {
 
     Highcharts.stockChart('container', {
 
@@ -105,8 +104,9 @@ function check(ticker){
   })
 }
 
-function go(){
+function go(names){
   //name = ticker;
+  var seriesOptions = []
   $.each(names, function (i, name) {
       $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
       //if (typeof(data) == "object"){
@@ -151,9 +151,9 @@ function go(){
             data: usefulData
         };
         seriesCounter += 1;
-        
+        console.log("incrementing " + name + " " + seriesCounter)
       if (seriesCounter === names.length) {
-        createChart();
+        createChart(seriesOptions);
       }
     })
   });
