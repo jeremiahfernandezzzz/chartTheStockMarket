@@ -93,6 +93,7 @@ function go(ticker){
     })
     console.log(usefulData)
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
+    seriesArray.push([name, usefulData])
         seriesOptions[seriesOptions.length] = {
             name: name,
             data: usefulData
