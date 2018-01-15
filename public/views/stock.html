@@ -16,7 +16,7 @@
       var socket = io();
       socket.on('tickback', function(ticker){
         console.log(ticker)
-        go(ticker)
+        //go(ticker)
       });
     </script>
   </head>
@@ -36,9 +36,7 @@ var seriesArray = [];
 var seriesCounter = 0;
   
 document.querySelector("#go").addEventListener("click", function(){
-  var ticker = []
-  ticker[0] = document.querySelector("#tickers").value
-  go(ticker)  
+  check(document.querySelector("#tickers").value)  
 }, false);
 /**
  * Create the chart when all data is loaded
@@ -63,8 +61,10 @@ document.querySelector("#remove").addEventListener("click", function(){
   
 function check(ticker){
   $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + ticker + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
-    
-  }
+    //if(data.quandl_error){
+      console.log(data.quandl_error)
+    //}
+  })
 }
 
 function go(ticker){
@@ -105,7 +105,6 @@ function go(ticker){
       usefulData.push([element[0],element[4]]);
       ctr++;
     })
-    socket.emit('data', name)
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
    // seriesArray.push([name, usefulData])
     //    seriesOptions[seriesOptions.length] = {
