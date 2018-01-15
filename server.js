@@ -30,7 +30,7 @@ io.on('connection', function(socket){
             console.log("connected to " + url);
             db.collection("chart-state").find({}).forEach(function(element){
               //console.log("dbsdf" + JSON.stringify(element.ticker))
-              io.emit("tickback", element.ticker);
+              socket.emit("tickback", element.ticker);
             })
       }
       if (err) {
