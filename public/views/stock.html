@@ -13,10 +13,12 @@
 
 		</style>
     <script>
+      var seriesOptions = [];
       var socket = io();
       socket.on('tickback', function(ticker){
         console.log(ticker)
         go(ticker)
+        draw(seriesOptions)
       });
     </script>
   </head>
@@ -31,9 +33,6 @@
 </html>
 
 <script type="text/javascript">
-var seriesOptions = [];
-var seriesArray = [];
-var seriesCounter = 0;
   
 document.querySelector("#go").addEventListener("click", function(){
   check(document.querySelector("#tickers").value)  
@@ -43,7 +42,6 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-    seriesArray.pop()
     seriesOptions = {}
     ctr = 0
     seriesArray.forEach(function(element){
@@ -113,7 +111,6 @@ function go(ticker){
         };
         
         // As we're loading the data asynchronously, we don't know what order it w
-        draw(seriesOptions)
 
     })
 }
