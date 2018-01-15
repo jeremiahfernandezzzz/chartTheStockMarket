@@ -16,7 +16,7 @@
       var socket = io();
       socket.on('tickback', function(ticker){
         console.log(ticker)
-        //go(ticker)
+        go(ticker)
       });
     </script>
   </head>
@@ -107,13 +107,13 @@ function go(ticker){
     })
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
    // seriesArray.push([name, usefulData])
-    //    seriesOptions[seriesOptions.length] = {
-   //         name: name,
-    //        data: usefulData
-   //     };
+        seriesOptions[seriesOptions.length] = {
+           name: name,
+            data: usefulData
+        };
         
         // As we're loading the data asynchronously, we don't know what order it w
-        //draw(seriesOptions)
+        draw(seriesOptions)
 
     })
 }
