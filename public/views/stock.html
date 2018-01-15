@@ -42,18 +42,7 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-    seriesOptions = {}
-    ctr = 0
-    seriesArray.forEach(function(element){
-        seriesOptions[ctr] = {
-          name: element[0],
-          data: element[1]
-        };
-      //console.log(element[0] + element[1]) 
-      ctr++
-    })
-        
-    draw(seriesOptions)
+    console.log(seriesOptions)
 }, false);
   
   
@@ -66,8 +55,8 @@ function check(ticker){
 }
 
 function go(ticker){
-  name = ticker;
-      $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
+  //name = ticker;
+      $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + ticker + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
       //if (typeof(data) == "object"){
       //} else {
       //}
@@ -106,7 +95,7 @@ function go(ticker){
     //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
    // seriesArray.push([name, usefulData])
         seriesOptions[seriesOptions.length] = {
-           name: name,
+           name: ticker,
             data: usefulData
         };
         
