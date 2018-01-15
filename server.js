@@ -65,6 +65,13 @@ io.on('connection', function(socket){
   });
   socket.on("delete", function(data){
     console.log(data)
+    
+  console.log('a user connected');  
+  MongoClient.connect(url, function(err, db){
+      if (db){
+      db.collection("chart-state").remove({ticker: data})
+      }
+    })
   })
   //io.emit('event', asd); // main namespace
 
