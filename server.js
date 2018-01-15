@@ -21,7 +21,6 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public/views'));
 
-var tickers = ""
 
 
 io.on('connection', function(socket){
@@ -30,10 +29,9 @@ io.on('connection', function(socket){
       if (db){
             console.log("connected to " + url);
             db.collection("chart-state").find({}).sort({_id: -1}).toArray().then(function(element){
-              console.log("db" + element)
-              tickers = element.tickers
+              console.log("db" + element.ticker)
+              io.emit("tickback", element.ticker);
             })
-            io.emit("tickback", tickers);
       }
       if (err) {
        console.log("did not connect to " + url)
@@ -44,12 +42,17 @@ io.on('connection', function(socket){
   });
   socket.on('data', function(data){
     console.log(data)
-    var tickers = data
     MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
-            db.collection("chart-state").insert({tickers : tickers})
-            console.log(tickers)
+            db.collection("chart-state").find({ticker: data}).then(function(element){
+              if (element){
+                db.collection("chart-state").insert({ticker : data})
+              } else {
+                console.log("ticker already exists")
+              }
+            })
+            console.log(data)
             //io.emit("tickback", tickers);
       }
       if (err) {
