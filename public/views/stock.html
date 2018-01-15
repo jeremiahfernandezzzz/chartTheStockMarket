@@ -34,11 +34,9 @@
   
 document.querySelector("#go").addEventListener("click", function(){
 
-  var tickers = []
-  document.querySelector("#tickers").value.split(",").forEach(function(element){
-    tickers.push(element.replace(/\s/g,""))
-  })
-  go(tickers)  
+  var ticker = []
+  ticker[0] = document.querySelector("#tickers").value
+  go(ticker)  
 }, false);
   
 /**
@@ -50,7 +48,6 @@ function go(tickers){
   var seriesOptions = [],
     seriesCounter = 0,
   names = tickers;
-  $.each(names, function (i, name) {
         $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
         //if (typeof(data) == "object"){
         socket.emit('status', data)
@@ -137,6 +134,5 @@ function go(tickers){
             });
           }
       })
-  });
 }
 		</script>
