@@ -71,7 +71,12 @@ io.on('connection', function(socket){
       if (db){
       db.collection("chart-state").remove({ticker: data})
       }
+      db.collection("chart-state").find({}).forEach(function(element){
+              //console.log("dbsdf" + JSON.stringify(element.ticker))
+        socket.emit("tickback", element.ticker);
+      })
     })
+  
   })
   //io.emit('event', asd); // main namespace
 
