@@ -21,7 +21,7 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public/views'));
 
-var tickers = []
+var tickers = ""
 
 
 io.on('connection', function(socket){
@@ -30,8 +30,8 @@ io.on('connection', function(socket){
       if (db){
             console.log("connected to " + url);
             db.collection("chart-state").find({}).sort({_id: -1}).toArray().then(function(element){
-              console.log(element[0])
-              tickers = element[0].tickers
+              console.log(element)
+              tickers = element
             })
             io.emit("tickback", tickers);
       }
@@ -49,7 +49,7 @@ io.on('connection', function(socket){
             console.log("connected to " + url);
             db.collection("chart-state").insert({tickers : tickers})
             console.log(tickers)
-            io.emit("tickback", tickers);
+            //io.emit("tickback", tickers);
       }
       if (err) {
        console.log("did not connect to " + url)
