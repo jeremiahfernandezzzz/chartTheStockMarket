@@ -43,22 +43,18 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
   socket.on('data', function(data){
-      console.log(data)
-    /*
-    if(tick){
-        tickers = tick
-        MongoClient.connect(url, function(err, db){
-          if (db){
-                console.log("connected to " + url);
-                db.collection("chart-state").insert({tickers : tickers})
-                console.log(tickers)
-                io.emit("tickback", tickers);
-          }
-          if (err) {
-           console.log("did not connect to " + url)
-          }
-        })
-      }*/
+    tickers = data
+    MongoClient.connect(url, function(err, db){
+      if (db){
+            console.log("connected to " + url);
+            db.collection("chart-state").insert({tickers : tickers})
+            console.log(tickers)
+            io.emit("tickback", tickers);
+      }
+      if (err) {
+       console.log("did not connect to " + url)
+      }
+    })
   });
   //io.emit('event', asd); // main namespace
 
