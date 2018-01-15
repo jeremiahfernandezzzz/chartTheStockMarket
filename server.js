@@ -52,7 +52,13 @@ io.on('connection', function(socket){
               if (element == ""){
                 console.log(data + "inserted")
                 db.collection("chart-state").insert({ticker : data})
-                io.emit("tickback", data)
+                db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
+                  var tickers = []
+                  Object.values(element).forEach(function(tick){
+                    tickers.push(tick.ticker)
+                  })
+                  io.emit("tickback", tickers)
+                })
               } else {
                 console.log(JSON.stringify(element) + " ticker already exists")
                 //io.emit("tickback", tickers)

@@ -33,6 +33,7 @@ names = [];
   
 var socket = io();
 socket.on('tickback', function(ticker){
+  console.log(ticker)
   names = ticker;
   go()
 });
@@ -151,9 +152,9 @@ function go(){
         };
         seriesCounter += 1;
         
-       if (seriesCounter === names.length) {
-            createChart();
-        }
+      if (seriesCounter === names.length) {
+        createChart();
+      }
     })
   });
 }
