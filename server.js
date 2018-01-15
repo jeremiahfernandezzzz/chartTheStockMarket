@@ -48,7 +48,7 @@ io.on('connection', function(socket){
             console.log("connected to " + url);
             db.collection("chart-state").find({ticker: data.toLowerCase()}).toArray().then(function(element){
               if (element == ""){
-                console.log(data + "inserted")
+                io.emit("tickadded", data)
                 db.collection("chart-state").insert({ticker : data.toLowerCase()})
                 db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
                   var tickers = []
@@ -59,7 +59,7 @@ io.on('connection', function(socket){
                 })
               } else {
                 console.log(JSON.stringify(element) + " ticker already exists")
-                io.emit("tickE", tickers)
+                io.emit("tickexists", data)
               }
             })
             console.log(data)
@@ -73,19 +73,29 @@ io.on('connection', function(socket){
   socket.on("delete", function(data){
     console.log(data)
     
-  console.log('a user connected');  
-  MongoClient.connect(url, function(err, db){
-      if (db){
-        db.collection("chart-state").remove({ticker: data})
-      }
-    
-        db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
-          var tickers = []
-          Object.values(element).forEach(function(tick){
-            tickers.push(tick.ticker)
-          })
-          io.emit("tickback", tickers)
-        })
+    console.log('a user connected');  
+    MongoClient.connect(url, function(err, db){
+        if (db){
+          
+          db.collection("chart-state").find({ticker: data.toLowerCase()}).toArray().then(function(element){
+              if (element == ""){
+                io.emit("tickalreadyremoved", data)
+              } else {
+                db.collection("chart-state").remove({ticker: data})
+                io.emit("tickremoved", data)
+                db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
+                  var tickers = []
+                  Object.values(element).forEach(function(tick){
+                    tickers.push(tick.ticker)
+                  })
+                  io.emit("tickback", tickers)
+                })
+              }
+            })
+          
+        }
+
+      
     
     })
   

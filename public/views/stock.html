@@ -37,6 +37,14 @@ socket.on('tickback', function(ticker){
   go(ticker)
 });
   
+socket.on('tickadded', function(ticker){
+ alert(ticker + " added")
+});
+  
+socket.on('tickexists', function(ticker){
+ alert(ticker + " already added")
+});
+  
 document.querySelector("#go").addEventListener("click", function(){
   check(document.querySelector("#tickers").value)  
 }, false);
