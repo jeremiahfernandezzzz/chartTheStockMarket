@@ -43,11 +43,10 @@ document.querySelector("#go").addEventListener("click", function(){
  * Create the chart when all data is loaded
  * @returns {undefined}
  */
+var seriesOptions = [];
 
-function go(tickers){
-  var seriesOptions = [],
-    seriesCounter = 0,
-  names = tickers;
+function go(ticker){
+  name = ticker;
         $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
         //if (typeof(data) == "object"){
         socket.emit('status', data)
@@ -87,18 +86,16 @@ function go(tickers){
       })
       console.log(usefulData)
       //document.getElementById("data").innerHTML = JSON.stringify(usefulData);
-          seriesOptions[i] = {
+          seriesOptions[seriesOptions.length] = {
               name: name,
               data: usefulData
           };
-
+          draw(seriesOptions)
           // As we're loading the data asynchronously, we don't know what order it will arrive. So
           // we keep a counter and create the chart when all the data is loaded.
-          seriesCounter += 1;
 
-          if (seriesCounter === names.length) {
-
-            Highcharts.stockChart('container', {
+            function draw(seriesOptions){
+              Highcharts.stockChart('container', {
 
                 rangeSelector: {
                     selected: 4
