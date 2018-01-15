@@ -13,11 +13,12 @@
 
 		</style>
     <script>
-      var seriesOptions = [];
+      var seriesOptions = [],
+      seriesCounter = 0
       var socket = io();
       socket.on('tickback', function(ticker){
         console.log(ticker)
-        go(ticker)
+        vax = createElement
       });
     </script>
   </head>
