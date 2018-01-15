@@ -76,12 +76,17 @@ io.on('connection', function(socket){
   console.log('a user connected');  
   MongoClient.connect(url, function(err, db){
       if (db){
-      db.collection("chart-state").remove({ticker: data})
+        db.collection("chart-state").remove({ticker: data})
       }
-      db.collection("chart-state").find({}).forEach(function(element){
-              //console.log("dbsdf" + JSON.stringify(element.ticker))
-        socket.emit("tickback", element.ticker);
-      })
+    
+        db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
+          var tickers = []
+          Object.values(element).forEach(function(tick){
+            tickers.push(tick.ticker)
+          })
+          io.emit("tickback", tickers)
+        })
+    
     })
   
   })

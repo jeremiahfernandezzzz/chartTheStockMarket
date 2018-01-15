@@ -45,7 +45,7 @@ document.querySelector("#go").addEventListener("click", function(){
  * @returns {undefined}
  */
 document.querySelector("#remove").addEventListener("click", function(){
-    draw(seriesOptions)
+    socket.emit("delete", document.querySelector("#tickers").value)
 }, false);
   
   //assddddddddddddddddddddddddddddddddddddddddddddddddddddd
