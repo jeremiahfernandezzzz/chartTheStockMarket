@@ -63,6 +63,9 @@ io.on('connection', function(socket){
       }
     })
   });
+  socket.on("delete", function(data){
+    console.log(data)
+  })
   //io.emit('event', asd); // main namespace
 
 });

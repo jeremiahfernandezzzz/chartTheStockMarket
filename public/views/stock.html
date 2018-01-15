@@ -13,16 +13,6 @@
 
 		</style>
     <script>
-      var seriesOptions = [],
-      seriesCounter = 0
-      var socket = io();
-      socket.on('tickback', function(ticker){
-        console.log(ticker)
-        var x = document.createElement("a");
-        x.innerHTML = ticker
-        x.setAttribute("href", "/" + ticker)
-        document.body.append(x)
-      });
     </script>
   </head>
 	<body>
@@ -36,6 +26,25 @@
 </html>
 
 <script type="text/javascript">
+var seriesOptions = [],
+seriesCounter = 0
+var socket = io();
+socket.on('tickback', function(ticker){
+  console.log(ticker)
+  var x = document.createElement("a");
+  x.innerHTML = ticker
+  x.setAttribute("class", "ticker")
+  x.setAttribute("href", "/")
+  x.setAttribute("id", ticker)
+  document.body.append(x)
+    
+  x.addEventListener("click", function(e){
+    e.preventDefault()
+    socket.emit("delete", this.id)
+  })
+});
+  
+
   
 document.querySelector("#go").addEventListener("click", function(){
   check(document.querySelector("#tickers").value)  
