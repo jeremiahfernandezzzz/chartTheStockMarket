@@ -31,21 +31,21 @@
 </html>
 
 <script type="text/javascript">
+var seriesOptions = [];
+var seriesCounter = 0;
   
 document.querySelector("#go").addEventListener("click", function(){
   var ticker = []
   ticker[0] = document.querySelector("#tickers").value
   go(ticker)  
-  draw(seriesOptions)
 }, false);
   
+  draw(seriesOptions)
 /**
  * Create the chart when all data is loaded
  * @returns {undefined}
  */
 
-var seriesOptions = [];
-  var series
 function go(ticker){
   name = ticker;
       $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + name + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
@@ -91,6 +91,8 @@ function go(ticker){
             name: name,
             data: usefulData
         };
+        
+        seriesCounter +=1 ;
         // As we're loading the data asynchronously, we don't know what order it will arrive. So
         // we keep a counter and create the chart when all the data is loaded.
 
@@ -99,39 +101,41 @@ function go(ticker){
   
   
     function draw(seriesOptions){
-      Highcharts.stockChart('container', {
+      if (seriesCounter == seriesOptions.length){
+          Highcharts.stockChart('container', {
 
-        rangeSelector: {
-            selected: 4
-        },
+            rangeSelector: {
+                selected: 4
+            },
 
-        yAxis: {
-            labels: {
-                formatter: function () {
-                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
+            yAxis: {
+                labels: {
+                    formatter: function () {
+                        return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                    }
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 2,
+                    color: 'silver'
+                }]
+            },
+
+            plotOptions: {
+                series: {
+                    compare: 'percent',
+                    showInNavigator: true
                 }
             },
-            plotLines: [{
-                value: 0,
-                width: 2,
-                color: 'silver'
-            }]
-        },
 
-        plotOptions: {
-            series: {
-                compare: 'percent',
-                showInNavigator: true
-            }
-        },
+            tooltip: {
+                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                valueDecimals: 2,
+                split: true
+            },
 
-        tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-            valueDecimals: 2,
-            split: true
-        },
-
-        series: seriesOptions
-    });
-  }
+            series: seriesOptions
+        });
+      }
+    }
 		</script>
