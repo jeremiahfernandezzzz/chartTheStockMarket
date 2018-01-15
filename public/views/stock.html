@@ -46,15 +46,18 @@ document.querySelector("#go").addEventListener("click", function(){
  */
 document.querySelector("#remove").addEventListener("click", function(){
     seriesArray.pop()
+    seriesOptions = {}
+    ctr = 0
     seriesArray.forEach(function(element){
-        seriesOptions[seriesArray.length] = {
+        seriesOptions[ctr] = {
           name: element[0],
           data: element[1]
         };
-      //console.log(element[0] + element[1])
+      //console.log(element[0] + element[1]) 
+      ctr++
     })
         
-    seriesCounter -=1 ;
+    seriesCounter = seriesOptions.length ;
     draw(seriesOptions)
 }, false);
   
