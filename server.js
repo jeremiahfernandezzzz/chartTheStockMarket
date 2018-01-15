@@ -46,10 +46,10 @@ io.on('connection', function(socket){
     MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
-            db.collection("chart-state").find({ticker: data}).toArray().then(function(element){
+            db.collection("chart-state").find({ticker: data.toLowerCase()}).toArray().then(function(element){
               if (element == ""){
                 console.log(data + "inserted")
-                db.collection("chart-state").insert({ticker : data})
+                db.collection("chart-state").insert({ticker : data.toLowerCase()})
                 db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
                   var tickers = []
                   Object.values(element).forEach(function(tick){
@@ -59,7 +59,7 @@ io.on('connection', function(socket){
                 })
               } else {
                 console.log(JSON.stringify(element) + " ticker already exists")
-                //io.emit("tickback", tickers)
+                io.emit("tickE", tickers)
               }
             })
             console.log(data)
