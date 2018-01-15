@@ -43,7 +43,7 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
   socket.on('data', function(data){
-    tickers = data
+    var tickers = data
     MongoClient.connect(url, function(err, db){
       if (db){
             console.log("connected to " + url);
