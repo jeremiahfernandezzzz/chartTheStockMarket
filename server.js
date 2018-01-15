@@ -27,11 +27,11 @@ io.on('connection', function(socket){
   console.log('a user connected');  
   MongoClient.connect(url, function(err, db){
       if (db){
-          //var tickers = []
+          var tickers = []
             console.log("connected to " + url);
-            db.collection("chart-state").find({}).forEach(function(element){
-              //console.log("dbsdf" + JSON.stringify(element.ticker))
-              socket.emit("tickback", element.ticker);
+            db.collection("chart-state").find({},{ticker:1, _id: 0}).toArray().then(function(element){
+              tickers = element;
+              console.log(tickers)
             })
       }
       if (err) {
