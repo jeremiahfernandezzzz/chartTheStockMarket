@@ -21,8 +21,6 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public/views'));
 
-
-
 io.on('connection', function(socket){
   console.log('a user connected');  
   MongoClient.connect(url, function(err, db){
@@ -33,7 +31,7 @@ io.on('connection', function(socket){
               Object.values(element).forEach(function(tick){
                 tickers.push(tick.ticker)
               })
-              io.emit("tickback", tickers)
+              socket.emit("tickback", tickers)
             })
       }
       if (err) {

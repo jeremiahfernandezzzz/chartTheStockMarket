@@ -97,7 +97,7 @@ function createChart(seriesOptions) {
   //assddddddddddddddddddddddddddddddddddddddddddddddddddddd
   
 function check(ticker){
-  $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + ticker + '/data.json?api_key=9DL8AEJpLQna4YsPswnY&order=asc',    function (data) {
+  $.getJSON('https://www.quandl.com/api/v3/datasets/WIKI/' + ticker + '/data.json?api_key=9DL8AEJpLQna4YsPswnY',    function (data) {
     //if(data.quandl_error){
       socket.emit("data", ticker)
     //asda}
@@ -151,7 +151,7 @@ function go(names){
             data: usefulData
         };
         seriesCounter += 1;
-        console.log("incrementing " + name + " " + seriesCounter)
+        console.log("incrementing " + name + " " + seriesCounter + " " + seriesOptions)
       if (seriesCounter === names.length) {
         createChart(seriesOptions);
       }
